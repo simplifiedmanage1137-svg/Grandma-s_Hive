@@ -5,7 +5,12 @@ const PageLoader = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 3500);
+    const minTime = 800; // much faster (0.8s)
+
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, minTime);
+
     return () => clearTimeout(timer);
   }, []);
 

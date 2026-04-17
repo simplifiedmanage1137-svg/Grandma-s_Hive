@@ -64,7 +64,9 @@ const WorkSection = () => {
           viewport={{ once: true }}
           className="mb-5"
         >
-          <p className="text-uppercase mb-3" style={{ fontFamily: "'Lay Grotesk - Trial Black', sans-serif", fontSize: '24px' }}>Selected Work</p>
+          <p className="text-uppercase mb-3" style={{ fontFamily: "'Lay Grotesk - Trial Black', sans-serif", fontSize: '24px' }}>
+            Selected Work
+          </p>
         </motion.div>
 
         <div className="row g-4">
@@ -109,11 +111,8 @@ const WorkSection = () => {
         </div>
       </div>
 
-      {/* --- Updated Scrolling Text Section with Image --- */}
+      {/* ✅ CLEAN SCROLLING TEXT (NO BG IMAGE) */}
       <div className="scrolling-text-container-with-bg">
-        {/* Dark Overlay for Text Readability */}
-        <div className="scrolling-bg-overlay"></div>
-        
         <div className="scrolling-text-wrapper">
           <div className="scrolling-text">
             MAKE LOVE, NOT NOISE &nbsp;&nbsp;&nbsp;✦&nbsp;&nbsp;&nbsp;
@@ -130,7 +129,7 @@ const WorkSection = () => {
         </div>
       </div>
 
-      {/* Custom Blue Square Cursor */}
+      {/* Custom Cursor */}
       {isHovered && (
         <div
           style={{
@@ -141,17 +140,15 @@ const WorkSection = () => {
             height: '40px',
             backgroundColor: '#0066FF',
             border: '2px solid #ffffff',
-            borderRadius: '0px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             transform: 'translate(-50%, -50%)',
             pointerEvents: 'none',
             zIndex: 99999,
-            transition: 'transform 0.05s ease',
           }}
         >
-          <span style={{ color: '#ffffff', fontSize: '24px', fontWeight: 'bold', marginLeft: '4px' }}>→</span>
+          <span style={{ color: '#ffffff', fontSize: '24px', fontWeight: 'bold' }}>→</span>
         </div>
       )}
 
@@ -181,11 +178,8 @@ const WorkSection = () => {
 
           .eager-text {
             font-size: 24px;
-            font-weight: 400;
             margin-bottom: 8px;
             color: #000;
-            letter-spacing: -0.02em;
-            transition: color 0.3s ease;
           }
 
           .work-link {
@@ -193,13 +187,11 @@ const WorkSection = () => {
             align-items: center;
             gap: 8px;
             text-decoration: none;
-            position: relative;
           }
 
           .work-link-text {
             font-size: 12px;
             letter-spacing: 1.5px;
-            font-weight: 500;
             color: #000;
           }
 
@@ -208,47 +200,28 @@ const WorkSection = () => {
             color: #000;
           }
 
-          .work-link:hover .work-link-text,
-          .work-link:hover .work-link-arrow {
-            color: #0066FF;
-          }
-
-          /* --- BACKGROUND SCROLLING TEXT STYLES --- */
+          /* ✅ CLEAN SCROLL SECTION */
           .scrolling-text-container-with-bg {
             width: 100%;
-            height: 350px; /* Fixed height for impact */
+            height: 350px;
             overflow: hidden;
             margin-top: 60px;
-            position: relative;
             display: flex;
             align-items: center;
-            /* Social Media Marketing Image Background */
-            background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=400&fit=crop');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed; /* Parallax effect */
-          }
-
-          .scrolling-bg-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.4); /* Darkens the image for white text contrast */
-            z-index: 1;
+            background-color: #f8f8f8;
           }
 
           .scrolling-text-wrapper {
             display: flex;
             white-space: nowrap;
-            z-index: 2;
             animation: scrollText 40s linear infinite;
           }
 
           .scrolling-text {
-            display: inline-block;
             font-size: clamp(60px, 12vw, 120px);
             font-weight: 900;
             letter-spacing: -2px;
-            color: #ffffff; /* White text on dark image overlay */
+            color: #000000;
             font-family: 'Lay Grotesk - Trial Black', sans-serif;
             text-transform: uppercase;
           }
@@ -256,12 +229,6 @@ const WorkSection = () => {
           @keyframes scrollText {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
-          }
-
-          @media (max-width: 768px) {
-            .scrolling-text-container-with-bg { height: 200px; }
-            .scrolling-text { font-size: 40px; }
-            .d-flex.justify-content-end { justify-content: center !important; }
           }
         `}
       </style>

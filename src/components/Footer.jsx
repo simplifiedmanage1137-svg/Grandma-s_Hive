@@ -15,6 +15,11 @@ const Footer = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
   };
 
+  const handleScrollToForm = () => {
+    const el = document.getElementById('form-section'); // change ID if needed
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <footer 
       id="contact" 
@@ -27,7 +32,7 @@ const Footer = () => {
         borderTop: '1px solid rgba(255,255,255,0.05)'
       }}
     >
-      {/* 1. Ghost Text - Lowered Z-Index to prevent overlap */}
+      {/* Ghost Text */}
       <div style={{
         position: 'absolute',
         bottom: '-5%',
@@ -36,11 +41,11 @@ const Footer = () => {
         fontSize: 'clamp(100px, 20vw, 350px)',
         fontFamily: "'Lay Grotesk - Trial Black', sans-serif",
         lineHeight: 0.7,
-        opacity: 0.03, 
+        opacity: 0.03,
         color: '#ffffff',
         pointerEvents: 'none',
         whiteSpace: 'nowrap',
-        zIndex: 1, // Stay behind content
+        zIndex: 1,
         width: '100%',
         textAlign: 'center'
       }}>
@@ -55,7 +60,7 @@ const Footer = () => {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {/* Left Column: Primary Contact */}
+          {/* Left Column */}
           <motion.div className="col-lg-6" variants={itemVariants}>
             <p style={{ 
               letterSpacing: '3px', 
@@ -66,6 +71,7 @@ const Footer = () => {
             }}>
               / CONNECT WITH US
             </p>
+
             <h2 style={{ 
               fontFamily: "'Lay Grotesk - Trial Black', sans-serif", 
               fontSize: 'clamp(44px, 8vw, 85px)', 
@@ -76,13 +82,29 @@ const Footer = () => {
             }}>
               WANT TO<br />WORK?
             </h2>
+
             <div className="d-flex flex-column gap-2">
-              <a href="mailto:hello@strangepixels.co" className="footer-link-main">hello@strangepixels.co</a>
-              <a href="tel:+523338155238" className="footer-link-main">+52 33 3815 5238</a>
+              <a href="mailto:hello@strangepixels.co" className="footer-link-main">
+                hello@strangepixels.co
+              </a>
+              <a href="tel:+523338155238" className="footer-link-main">
+                +52 33 3815 5238
+              </a>
             </div>
+
+            {/* ✅ CTA BUTTON */}
+            <motion.button
+              variants={itemVariants}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleScrollToForm}
+              className="footer-cta-btn"
+            >
+              Start a Project →
+            </motion.button>
           </motion.div>
 
-          {/* Right Column: Locations */}
+          {/* Right Column */}
           <div className="col-lg-6">
             <div className="row g-4 h-100 align-items-end">
               <motion.div className="col-md-6" variants={itemVariants}>
@@ -112,7 +134,7 @@ const Footer = () => {
           </div>
         </motion.div>
 
-        {/* Bottom Credits Bar */}
+        {/* Bottom Bar */}
         <motion.div 
           className="row mt-5 pt-5 align-items-center"
           initial={{ opacity: 0 }}
@@ -149,6 +171,27 @@ const Footer = () => {
           .footer-link-main:hover {
             color: #dbff00;
             border-bottom: 1px solid #dbff00;
+          }
+
+          .footer-cta-btn {
+            margin-top: 30px;
+            padding: 14px 28px;
+            background-color: #dbff00;
+            color: #000;
+            border: none;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: fit-content;
+          }
+
+          .footer-cta-btn:hover {
+            background-color: #c4e600;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(219, 255, 0, 0.2);
           }
 
           .location-title {
