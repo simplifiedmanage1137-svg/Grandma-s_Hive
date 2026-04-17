@@ -38,12 +38,12 @@ function App() {
         <WorkSection />
         <ProcessSection />
         {/* <AboutSection /> */}
-        <HorizontalScrollSection />
+        {/* <HorizontalScrollSection /> */}
         <ServicesSection />
         {/* <ClientsSection /> */}
         <CanvasCursor />
         {/* <InteractiveBanner />; */}
-        <Capabilities />
+        {/* <Capabilities /> */}
         <Footer />
       </div>
     </>
