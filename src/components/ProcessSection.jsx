@@ -33,7 +33,7 @@ const ProcessSection = () => {
                   key={i} 
                   className="process-card-stacked"
                   style={{ 
-                    top: `${10 + i * 3}vh`, // Vertical stacking spacing
+                    top: `${10 + i * 3}vh`,
                     zIndex: i + 1,
                     backgroundColor: p.color
                   }}
@@ -66,11 +66,46 @@ const ProcessSection = () => {
             min-height: 180vh;
           }
 
+          /* Mobile fallback for background attachment */
+          @media (max-width: 768px) {
+            .process-outer-section {
+              background-attachment: scroll;
+              min-height: auto;
+              padding: 60px 0;
+            }
+          }
+
           .process-overlay {
             position: absolute;
             inset: 0;
             background: rgba(0, 0, 0, 0.85);
             z-index: 1;
+          }
+
+          .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+          }
+
+          .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -15px;
+          }
+
+          .col-lg-5, .col-lg-7 {
+            padding: 0 15px;
+          }
+
+          .col-lg-5 {
+            flex: 0 0 41.666%;
+            max-width: 41.666%;
+          }
+
+          .col-lg-7 {
+            flex: 0 0 58.333%;
+            max-width: 58.333%;
           }
 
           .sticky-box {
@@ -87,23 +122,33 @@ const ProcessSection = () => {
             text-transform: uppercase;
           }
 
-          .lime-text { color: #dbff00; }
+          .lime-text { 
+            color: #dbff00; 
+          }
 
-          /* --- COMPACT STACKING DESIGN --- */
+          /* --- COMPACT STACKING DESIGN (DESKTOP ORIGINAL) --- */
           .stacked-cards-container {
             position: relative;
-            max-width: 600px; /* Card ki width limit ki hai taaki wo stretched na lage */
-            margin-left: auto; /* Right alignment */
+            max-width: 600px;
+            margin-left: auto;
           }
 
           .process-card-stacked {
             position: sticky;
-            min-height: 220px; /* Pehle 400px tha, ab size kam kar di hai */
+            min-height: 220px;
             margin-bottom: 8vh;
             padding: 40px;
             border-radius: 20px;
             border: 1px solid rgba(255,255,255,0.08);
             box-shadow: 0 -15px 30px rgba(0,0,0,0.6);
+            transition: all 0.3s ease;
+          }
+
+          /* Desktop stacking animation on hover */
+          .process-card-stacked:hover {
+            transform: translateY(-5px);
+            border-color: rgba(219, 255, 0, 0.3);
+            box-shadow: 0 -20px 40px rgba(0,0,0,0.8);
           }
 
           .card-content-grid {
@@ -136,15 +181,86 @@ const ProcessSection = () => {
             max-width: 90%;
           }
 
+          /* ========== RESPONSIVE STYLES (Only for mobile/tablet) ========== */
           @media (max-width: 991px) {
-            .stacked-cards-container { max-width: 100%; }
-            .sticky-box { position: relative; top: 0; margin-bottom: 40px; }
-            .process-card-stacked { 
-              position: relative; 
-              min-height: auto; 
+            .row {
+              flex-direction: column;
+            }
+            
+            .col-lg-5, .col-lg-7 {
+              flex: 0 0 100%;
+              max-width: 100%;
+            }
+            
+            .sticky-box {
+              position: relative;
+              top: 0;
+              margin-bottom: 40px;
+              text-align: center;
+            }
+            
+            .stacked-cards-container {
+              max-width: 100%;
+              margin-left: 0;
+            }
+            
+            .process-card-stacked {
+              position: relative;
               top: 0 !important;
+              min-height: auto;
               margin-bottom: 15px;
               padding: 30px;
+            }
+            
+            .process-card-stacked:hover {
+              transform: translateX(5px);
+            }
+          }
+
+          @media (max-width: 768px) {
+            .process-outer-section {
+              padding: 60px 0;
+            }
+            
+            .process-heading {
+              font-size: clamp(32px, 8vw, 48px);
+              line-height: 1.2;
+            }
+          }
+
+          @media (max-width: 576px) {
+            .process-card-stacked {
+              padding: 20px;
+            }
+            
+            .card-content-grid {
+              flex-direction: column;
+              gap: 12px;
+            }
+            
+            .step-num {
+              font-size: 14px;
+            }
+            
+            .card-title-compact {
+              font-size: 24px;
+              margin-bottom: 10px;
+            }
+            
+            .card-desc-compact {
+              font-size: 14px;
+              max-width: 100%;
+            }
+          }
+
+          /* Performance optimization for reduced motion */
+          @media (prefers-reduced-motion: reduce) {
+            .process-card-stacked {
+              transition: none;
+            }
+            
+            .process-card-stacked:hover {
+              transform: none;
             }
           }
         `}

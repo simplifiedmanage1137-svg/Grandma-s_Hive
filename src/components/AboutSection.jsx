@@ -1,12 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // --- 1. COMPACT FLIP STATS CARD ---
 const FlipStatsCard = ({ number, label, color, description }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   return (
-    <div className="col-md-3 mb-3 flip-container" onMouseEnter={() => setIsFlipped(true)} onMouseLeave={() => setIsFlipped(false)}>
+    <div className="col-md-3 col-6 mb-3 flip-container" onMouseEnter={() => setIsFlipped(true)} onMouseLeave={() => setIsFlipped(false)}>
       <motion.div className="flip-inner" animate={{ rotateY: isFlipped ? 180 : 0 }} transition={{ type: "spring", stiffness: 300, damping: 25 }}>
         <div className="card-face face-front">
           <div className="card-content-inner">
@@ -32,7 +32,7 @@ const TeamFlipCard = ({ index, member }) => {
   const borderColor = `hsl(${hue}, 80%, 60%)`;
 
   return (
-    <div className="col-md-3 mb-3 flip-container" onMouseEnter={() => setIsFlipped(true)} onMouseLeave={() => setIsFlipped(false)}>
+    <div className="col-md-3 col-6 mb-3 flip-container" onMouseEnter={() => setIsFlipped(true)} onMouseLeave={() => setIsFlipped(false)}>
       <motion.div className="flip-inner" animate={{ rotateY: isFlipped ? 180 : 0 }} transition={{ duration: 0.5 }}>
         <div className="card-face face-front">
           <div className="team-layout w-100 px-3 d-flex align-items-center">
@@ -74,7 +74,7 @@ const VideoCard = ({ title, description, icon, color }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="col-md-4 mb-4">
+    <div className="col-md-4 col-sm-6 mb-4">
       <motion.div
         className="video-card glass-panel h-100 p-4 text-center position-relative overflow-hidden"
         onHoverStart={() => setIsHovered(true)}
@@ -129,25 +129,23 @@ const FloatingTicker = () => {
   );
 };
 
-// --- 5. HERO SECTION WITH ANIMATED IMAGE (SQUARES REVEAL) ---
+// --- 5. HERO SECTION WITH ANIMATED IMAGE (FIXED FOR MOBILE - NAVBAR FIX) ---
 const HeroSection = () => {
   const [imageRevealed, setImageRevealed] = useState(false);
 
-  // Create a 4x4 grid of squares (16 squares)
   const squares = Array(16).fill().map((_, i) => i);
 
   useEffect(() => {
-    // Trigger reveal animation after component mounts
     const timer = setTimeout(() => setImageRevealed(true), 500);
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <section className="vh-100 d-flex align-items-center position-relative overflow-hidden" style={{ paddingTop: '100px', minHeight: '100vh' }}>
+    <section className="hero-section position-relative overflow-hidden">
       <div className="container z-3">
         <div className="row align-items-center">
           {/* Left side - Text content */}
-          <div className="col-lg-6">
+          <div className="col-lg-6 text-center text-lg-start">
             <span className="badge rounded-pill border border-lime text-lime px-3 py-1 mb-3 extra-small">✦ PREMIUM STUDIO</span>
             <h1 className="hero-title fw-black m-0">
               <div>WE ARE A</div>
@@ -157,8 +155,8 @@ const HeroSection = () => {
           </div>
 
           {/* Right side - Animated Image Grid */}
-          <div className="col-lg-6 mt-5 mt-lg-0">
-            <div className="hero-image-container position-relative mx-auto" style={{ width: '380px', height: '380px' }}>
+          <div className="col-lg-6 mt-5 mt-lg-0 d-flex justify-content-center">
+            <div className="hero-image-container position-relative mx-auto">
               {/* Blurred background */}
               <div
                 className="hero-image-blur position-absolute w-100 h-100 rounded-4 overflow-hidden"
@@ -173,7 +171,6 @@ const HeroSection = () => {
 
               {/* Main image container with grid reveal */}
               <div className="hero-image-grid position-relative w-100 h-100 rounded-4 overflow-hidden">
-                {/* Actual image */}
                 <img
                   src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=400&fit=crop"
                   alt="Hero visual"
@@ -181,7 +178,6 @@ const HeroSection = () => {
                   style={{ opacity: imageRevealed ? 1 : 0, transition: 'opacity 0.5s ease' }}
                 />
 
-                {/* Grid overlay with squares */}
                 <div className="grid-overlay-reveal position-absolute top-0 start-0 w-100 h-100">
                   <div className="grid-container" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gridTemplateRows: 'repeat(4, 1fr)', width: '100%', height: '100%' }}>
                     {squares.map((square, idx) => (
@@ -201,7 +197,6 @@ const HeroSection = () => {
                   </div>
                 </div>
 
-                {/* Animated border glow */}
                 <motion.div
                   className="hero-image-border position-absolute top-0 start-0 w-100 h-100 rounded-4"
                   animate={{
@@ -212,7 +207,6 @@ const HeroSection = () => {
                 />
               </div>
 
-              {/* Floating particles around image */}
               {[...Array(8)].map((_, i) => (
                 <motion.div
                   key={i}
@@ -245,7 +239,7 @@ const HeroSection = () => {
   );
 };
 
-// --- 6. FUTURE OF INTERACTION (VIDEO PLAYBACK FIXED WITH WORKING BUTTONS) ---
+// --- 6. FUTURE OF INTERACTION ---
 const Floating3DSection = () => {
   const [videoError, setVideoError] = useState(false);
   const videoRef = useRef(null);
@@ -283,7 +277,7 @@ const Floating3DSection = () => {
     if (currentVideoIndex < videoSources.length - 1) {
       setCurrentVideoIndex(currentVideoIndex + 1);
     } else {
-      setCurrentVideoIndex(0); // Loop back to first video
+      setCurrentVideoIndex(0);
     }
   };
 
@@ -291,7 +285,7 @@ const Floating3DSection = () => {
     if (currentVideoIndex > 0) {
       setCurrentVideoIndex(currentVideoIndex - 1);
     } else {
-      setCurrentVideoIndex(videoSources.length - 1); // Loop to last video
+      setCurrentVideoIndex(videoSources.length - 1);
     }
   };
 
@@ -302,19 +296,12 @@ const Floating3DSection = () => {
     }
   }, [currentSource]);
 
-  // Format time for display
-  const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-  };
-
   return (
     <section className="py-5 position-relative overflow-hidden" style={{ background: '#FFFFFF' }}>
       <div className="container">
         <div className="row align-items-center">
           <div className="col-md-6 mb-4 mb-md-0">
-            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} className="p-2">
+            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} className="p-2 text-center text-md-start">
               <span className="badge mb-3 px-3 py-2 rounded-pill small fw-bold" style={{
                 background: '#dbff00',
                 color: '#000000'
@@ -329,7 +316,7 @@ const Floating3DSection = () => {
                 and every motion guides users through a seamless digital journey. Welcome to the next
                 generation of web interaction.
               </p>
-              <div className="d-flex gap-3 mt-4">
+              <div className="d-flex gap-3 mt-4 justify-content-center justify-content-md-start">
                 <div className="d-flex align-items-center gap-2">
                   <div className="rounded-circle" style={{ width: '8px', height: '8px', background: '#dbff00' }}></div>
                   <span className="extra-small" style={{ color: '#666666' }}>3D Animation</span>
@@ -363,7 +350,8 @@ const Floating3DSection = () => {
                     <div className="dot yellow" />
                     <div className="dot green" />
                   </div>
-                  <span className="extra-small" style={{ color: '#666666' }}>▶ {videoSources[currentVideoIndex].title}</span>
+                  <span className="extra-small d-none d-sm-block" style={{ color: '#666666' }}>▶ {videoSources[currentVideoIndex].title}</span>
+                  <span className="extra-small d-sm-none" style={{ color: '#666666' }}>▶ Video</span>
                   <motion.div
                     animate={{ opacity: [0.5, 1, 0.5] }}
                     transition={{ duration: 2, repeat: Infinity }}
@@ -438,7 +426,8 @@ const Floating3DSection = () => {
                       {currentVideoIndex + 1} / {videoSources.length}
                     </span>
                   </div>
-                  <span className="extra-small" style={{ color: '#666666' }}>3D RENDER | 60FPS</span>
+                  <span className="extra-small d-none d-sm-block" style={{ color: '#666666' }}>3D RENDER | 60FPS</span>
+                  <span className="extra-small d-sm-none" style={{ color: '#666666' }}>60FPS</span>
                 </div>
               </div>
             </motion.div>
@@ -454,14 +443,14 @@ const LetsChatSection = () => {
   return (
     <section className="py-5">
       <div className="container">
-        <div className="chat-box rounded-4 p-5 text-center position-relative overflow-hidden">
+        <div className="chat-box rounded-4 p-3 p-md-5 text-center position-relative overflow-hidden">
           <motion.div
             className="chat-glow"
             animate={{ opacity: [0.3, 0.8, 0.3] }}
             transition={{ duration: 3, repeat: Infinity }}
           />
           <h3 className="text-white-50 mb-3 fw-light">Are you ready to take action?</h3>
-          <h1 className="display-2 fw-black mb-4 gradient-chat">LET'S CHAT.</h1>
+          <h1 className="display-3 display-md-2 fw-black mb-4 gradient-chat">LET'S CHAT.</h1>
           <motion.button
             className="btn-chat"
             whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(219,255,0,0.4)" }}
@@ -486,7 +475,6 @@ const AboutSection = () => {
   const { scrollYProgress } = useScroll({ target: containerRef });
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
-  // Extended OUR CORE services
   const coreServices = [
     { name: '3D Motion Art', color: '#dbff00' },
     { name: 'Digital Strategy', color: '#0066FF' },
@@ -499,14 +487,12 @@ const AboutSection = () => {
     <div ref={containerRef} className="bg-black text-white position-relative min-vh-100">
       <div className="grid-overlay" />
 
-      {/* 1. HERO WITH ANIMATED IMAGE */}
       <HeroSection />
 
-      {/* 2. SERVICES - EXPANDED OUR CORE */}
       <section className="py-5" style={{ background: '#FFFFFF' }}>
         <div className="container">
           <div className="row g-0 align-items-center">
-            <div className="col-md-4">
+            <div className="col-md-4 text-center text-md-start mb-3 mb-md-0">
               <h2 className="h2 fw-bold m-0" style={{ color: '#000000' }}>
                 OUR <span className="text-lime">CORE</span>
               </h2>
@@ -543,10 +529,8 @@ const AboutSection = () => {
         </div>
       </section>
 
-      {/* 3. FLOATING TICKER */}
       <FloatingTicker />
 
-      {/* 4. STATS */}
       <section className="py-3">
         <div className="container">
           <div className="row g-2">
@@ -558,7 +542,6 @@ const AboutSection = () => {
         </div>
       </section>
 
-      {/* 5. VIDEO CARD ROW */}
       <section className="py-5">
         <div className="container">
           <div className="text-center mb-5">
@@ -573,10 +556,8 @@ const AboutSection = () => {
         </div>
       </section>
 
-      {/* 6. 3D PANEL SECTION */}
       <Floating3DSection />
 
-      {/* 7. TEAM */}
       <section className="py-4">
         <div className="container text-center">
           <h2 className="h3 fw-bold mb-4">THE <span className="text-lime">MAGIC</span> MAKERS</h2>
@@ -588,7 +569,6 @@ const AboutSection = () => {
         </div>
       </section>
 
-      {/* 8. LET'S CHAT SECTION */}
       <LetsChatSection />
 
       <style>{`
@@ -598,7 +578,6 @@ const AboutSection = () => {
         .extra-small { font-size: 0.75rem; }
         .hero-title { font-size: clamp(2.5rem, 12vw, 5.5rem); line-height: 0.85; }
         .text-stroke { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.2); }
-        .border-white-10 { border-color: rgba(255,255,255,0.08) !important; }
         .cursor-pointer { cursor: pointer; }
         .transition-all { transition: all 0.3s ease; }
         .object-fit-cover { object-fit: cover; }
@@ -609,12 +588,40 @@ const AboutSection = () => {
           background-size: 40px 40px;
         }
 
-        /* Hero Image Styles */
+        /* Hero Section Responsive Styles - FIXED FOR NAVBAR */
+        .hero-section {
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          position: relative;
+          overflow: hidden;
+          padding-top: 120px;
+          padding-bottom: 60px;
+        }
+
+        /* Additional padding for mobile to prevent navbar overlap */
+        @media (max-width: 768px) {
+          .hero-section {
+            padding-top: 100px;
+            padding-bottom: 40px;
+            min-height: auto;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .hero-section {
+            padding-top: 90px;
+            padding-bottom: 30px;
+          }
+        }
+
         .hero-image-container {
           position: relative;
-          border-radius: 24px;
+          width: 380px;
+          height: 380px;
+          margin: 0 auto;
         }
-        
+
         .hero-image-grid {
           position: relative;
           z-index: 2;
@@ -709,19 +716,112 @@ const AboutSection = () => {
         @keyframes scan { 0% { transform: translateY(0); } 100% { transform: translateY(260px); } }
         @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.5); } }
 
-        .cta-box { background: #050505; }
-        .btn-lime-glow { background: #dbff00; color: #000; border: none; padding: 12px 30px; border-radius: 50px; font-weight: 800; box-shadow: 0 0 20px rgba(219,255,0,0.3); }
         .orb { position: absolute; width: 450px; height: 450px; filter: blur(130px); opacity: 0.12; background: #dbff00; top: 10%; left: -5%; }
         .gradient-move { background: linear-gradient(90deg, #dbff00, #fff, #dbff00); background-size: 200%; -webkit-background-clip: text; color: transparent; animation: flow 5s linear infinite; }
         
-        .w-8 { width: 8px; } .h-8 { height: 8px; }
-        
         @keyframes flow { to { background-position: 200%; } }
         
-        @media (max-width: 768px) {
+        /* ========== RESPONSIVE STYLES ========== */
+        
+        /* Desktop Large Screens */
+        @media (min-width: 1400px) {
+          .hero-image-container { width: 420px; height: 420px; }
+        }
+        
+        /* Desktop */
+        @media (min-width: 1200px) and (max-width: 1399px) {
+          .hero-image-container { width: 380px; height: 380px; }
+        }
+        
+        /* Tablet Landscape */
+        @media (min-width: 992px) and (max-width: 1199px) {
+          .hero-image-container { width: 340px; height: 340px; }
+          .hero-section { padding-top: 100px; padding-bottom: 50px; }
+        }
+        
+        /* Tablet Portrait */
+        @media (min-width: 768px) and (max-width: 991px) {
+          .hero-section { padding-top: 90px; padding-bottom: 40px; min-height: auto; }
+          .hero-image-container { width: 320px; height: 320px; margin-top: 30px; }
+          .hero-title { font-size: clamp(3rem, 8vw, 4.5rem) !important; }
+          .floating-3d-card { width: 300px; height: 360px; }
+          .flip-container { height: 150px; }
+        }
+        
+        /* Mobile Landscape */
+        @media (min-width: 576px) and (max-width: 767px) {
+          .hero-section { padding-top: 80px; padding-bottom: 30px; min-height: auto; }
+          .hero-image-container { width: 280px; height: 280px; margin-top: 40px; }
+          .hero-title { font-size: clamp(2.5rem, 7vw, 3.5rem) !important; line-height: 1.1 !important; }
           .floating-3d-card { width: 280px; height: 340px; }
           .ticker-text { font-size: 1rem; }
-          .hero-image-container { width: 280px !important; height: 280px !important; }
+          .flip-container { height: 140px; }
+        }
+        
+        /* Mobile Portrait */
+        @media (max-width: 575px) {
+          .hero-section { padding-top: 80px !important; padding-bottom: 20px !important; min-height: auto; }
+          .hero-image-container { width: 260px; height: 260px; margin-top: 30px; }
+          .hero-title { font-size: clamp(2rem, 6vw, 2.8rem) !important; line-height: 1.2 !important; }
+          .hero-title div { margin-bottom: 5px; }
+          .badge { font-size: 0.7rem !important; padding: 0.5rem 1rem !important; }
+          .floating-3d-card { width: 260px; height: 320px; }
+          .flip-container { height: 130px; }
+          .card-face .display-4 { font-size: 1.5rem; }
+          .extra-small { font-size: 0.7rem; }
+          .btn-chat { padding: 8px 20px; font-size: 12px; }
+          .chat-dots { bottom: 10px; right: 15px; }
+          .service-row { padding: 0.75rem 0 !important; }
+          .service-row h5 { font-size: 0.85rem; }
+          .display-3 { font-size: 2.5rem; }
+        }
+        
+        /* Extra Small Mobile */
+        @media (max-width: 380px) {
+          .hero-section { padding-top: 70px !important; }
+          .hero-image-container { width: 220px; height: 220px; }
+          .hero-title { font-size: clamp(1.8rem, 5vw, 2.2rem) !important; }
+          .floating-3d-card { width: 240px; height: 300px; }
+        }
+        
+        /* Landscape Mode for Mobile */
+        @media (max-width: 768px) and (orientation: landscape) {
+          .hero-section { padding-top: 60px !important; padding-bottom: 15px !important; min-height: auto; }
+          .hero-image-container { width: 200px; height: 200px; margin-top: 20px; }
+          .hero-title { font-size: 2rem !important; }
+          .col-lg-6 { margin-bottom: 20px; }
+          .floating-3d-card { width: 260px; height: 300px; }
+          .video-content-wrapper { height: 200px !important; }
+        }
+        
+        /* For very tall screens */
+        @media (min-height: 800px) and (max-width: 768px) {
+          .hero-section { min-height: 80vh; }
+          .hero-image-container { width: 300px; height: 300px; }
+        }
+        
+        /* Reduced Motion Preference */
+        @media (prefers-reduced-motion: reduce) {
+          .floating-particle, .avatar-ring, .scan-line, .gradient-move {
+            animation: none !important;
+          }
+          .video-card, .btn-chat, .service-row {
+            transition: none !important;
+          }
+          .video-card:hover { transform: none !important; }
+        }
+        
+        /* Ensure images don't overflow */
+        .hero-image-grid,
+        .hero-image-blur,
+        .hero-main-image {
+          border-radius: 20px;
+        }
+        
+        /* Smooth transitions */
+        .hero-image-container,
+        .hero-title {
+          transition: all 0.3s ease;
         }
       `}</style>
     </div>
